@@ -84,13 +84,19 @@
         }
       },
       requirements: ["pandas", "numpy", "plotly", "statsmodels"]
-    }, document.getElementById("root")).then(() => {
-      const loader = document.getElementById("loading-indicator");
-      if (loader) {
-        loader.style.opacity = "0";
-        setTimeout(() => loader.remove(), 500);
+    }, document.getElementById("root"));
+
+    const checkLoaded = setInterval(() => {
+      const appContainer = document.querySelector('[data-testid="stAppViewContainer"]') || document.querySelector('.stApp');
+      if (appContainer && appContainer.innerText && appContainer.innerText.length > 50) {
+        clearInterval(checkLoaded);
+        const loader = document.getElementById("loading-indicator");
+        if (loader) {
+          loader.style.opacity = "0";
+          setTimeout(() => loader.remove(), 400);
+        }
       }
-    });
+    }, 300);
   </script>
 </body>
 </html>
